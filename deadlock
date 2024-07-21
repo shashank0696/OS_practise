@@ -1,0 +1,73 @@
+#include<stdio.h>
+void main()
+{
+int r,p,alloc[10][10],avail[5],i,j,instance[5],max[10][10],need[10][10],c1,c2,k=0,finish[10];
+printf("Enter Number of Processes= ");
+scanf("%d",&p);
+printf("Enter Number of resources= ");
+scanf("%d",&r);
+printf("Enter number of available instances of each resource= ");
+for(i=0;i<r;i++)
+{
+scanf("%d",&avail[i]);
+}
+printf("Enter allocation matrix:\n");
+for(i=0;i<p;i++)
+{
+printf("P[%d] ",i);
+for(j=0;j<r;j++)
+{
+scanf("%d",&alloc[i][j]);
+}
+}
+printf("Enter max matrix\n");
+for(i=0;i<p;i++)
+{
+printf("P[%d] ",i);
+for(j=0;j<r;j++)
+{
+scanf("%d",&max[i][j]);
+need[i][j]=max[i][j]-alloc[i][j];
+}
+}
+printf("Need matrix is:\n");
+for(i=0;i<p;i++)
+{
+printf("\nP[%d]\t",i);
+for(j=0;j<r;j++)
+{
+printf("%d\t",need[i][j]);
+}
+}
+printf("\n");
+while(c1!=p)
+{
+c2=c1;
+for(i=0;i<p;i++)
+{
+for(j=0;j<r;j++)
+{
+if(need[i][j]<=avail[j])
+{
+k++;
+}
+}
+if(k==r&&finish[i]==0)
+{
+printf("p[%d] ",i);
+finish[i]=1;
+for(j=0;j<r;j++)
+{
+avail[j]=avail[j]+alloc[i][j];
+}
+c1++;
+}
+k=0;
+}
+if(c1==c2)
+{
+printf("has Deadlock\n");
+break;
+}
+}
+}
